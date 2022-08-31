@@ -1,4 +1,4 @@
-version: "3"
+version: "2"
 services:
   consul:
     image: consul:latest
@@ -7,120 +7,128 @@ services:
       - "8400:8400"
       - "8500:8500"
       - "8600:53/udp"
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
+    restart: always
 
   frontend:
     environment:
       - TLS
-    image: igorrudyk1/hotel_reserv_frontend_single_node:latest
+      - JAEGER_SAMPLE_RATIO
+      - LOG_LEVEL
+    build: .
+    image: hotel_reserv_frontend_single_node
     entrypoint: frontend
+    container_name: 'hotel_reserv_frontend'
     ports:
       - "5000:5000"
     depends_on:
       - consul
-    deploy:
-      replicas: 3
-      restart_policy:
-        condition: on-failure
+    restart: always
 
   profile:
     environment:
       - TLS
-    image: igorrudyk1/hotel_reserv_profile_single_node:latest
+      - JAEGER_SAMPLE_RATIO
+      - LOG_LEVEL
+    build: .
+    image: hotel_reserv_profile_single_node
     entrypoint: profile
+    container_name: 'hotel_reserv_profile'
     depends_on:
       - mongodb-profile
       - memcached-profile
       - consul
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
+    restart: always
 
   search:
-    image: igorrudyk1/hotel_reserv_search_single_node:latest
+    build: .
+    image: hotel_reserv_search_single_node
     entrypoint: search
+    container_name: 'hotel_reserv_search'
     depends_on:
       - consul
+    restart: always
     environment:
       - TLS
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
+      - JAEGER_SAMPLE_RATIO
+      - LOG_LEVEL
+      # - GRPC_GO_LOG_VERBOSITY_LEVEL=2
+      # - GRPC_GO_LOG_SEVERITY_LEVEL=info
 
   geo:
     environment:
       - TLS
-    image: igorrudyk1/hotel_reserv_geo_single_node:latest
+      - JAEGER_SAMPLE_RATIO
+      - LOG_LEVEL
+    build: .
+    image: hotel_reserv_geo_single_node
     entrypoint: geo
+    container_name: 'hotel_reserv_geo'
     depends_on:
       - mongodb-geo
       - consul
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
+    restart: always
 
   rate:
     environment:
       - TLS
-    image: igorrudyk1/hotel_reserv_rate_single_node:latest
+      - JAEGER_SAMPLE_RATIO
+      - LOG_LEVEL
+    build: .
+    image: hotel_reserv_rate_single_node
     entrypoint: rate
+    container_name: 'hotel_reserv_rate'
     depends_on:
       - mongodb-rate
       - memcached-rate
       - consul
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
+    restart: always
 
   recommendation:
     environment:
       - TLS
-    image: igorrudyk1/hotel_reserv_recommendation_single_node:latest
+      - JAEGER_SAMPLE_RATIO
+      - LOG_LEVEL
+    build: .
+    image: hotel_reserv_recommend_single_node
     entrypoint: recommendation
+    container_name: 'hotel_reserv_recommendation'
     depends_on:
       - mongodb-recommendation
       - consul
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
+    restart: always
 
   user:
     environment:
       - TLS
-    image: igorrudyk1/hotel_reserv_user_single_node:latest
+      - JAEGER_SAMPLE_RATIO
+      - LOG_LEVEL
+    build: .
+    image: hotel_reserv_user_single_node
     entrypoint: user
+    container_name: 'hotel_reserv_user'
     depends_on:
       - mongodb-user
       - consul
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
+    restart: always
 
   reservation:
     environment:
       - TLS
-    image: igorrudyk1/hotel_reserv_reserve_single_node:latest
+      - JAEGER_SAMPLE_RATIO
+      - LOG_LEVEL
+    build: .
+    image: hotel_reserv_rsv_single_node
     entrypoint: reservation
+    container_name: 'hotel_reserv_reservation'
     depends_on:
       - mongodb-reservation
       - memcached-reserve
       - consul
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
+    restart: always
 
   jaeger:
     image: jaegertracing/all-in-one:latest
+    container_name: 'hotel_reserv_jaeger'
     ports:
       - "14269"
       - "5778:5778"
@@ -130,113 +138,92 @@ services:
       - "5775:5775/udp"
       - "6831:6831/udp"
       - "6832:6832/udp"
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
+    restart: always
 
   memcached-rate:
     image: memcached
-    hostname: user-memcached
+    # hostname: user-memcached
+    container_name: 'hotel_reserv_rate_mmc'
+    restart: always
     environment:
       - MEMCACHED_CACHE_SIZE=128
       - MEMCACHED_THREADS=2
     logging:
       options:
         max-size: 50m
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
 
   memcached-profile:
     image: memcached
-    hostname: user-memcached
+    # hostname: user-memcached
+    container_name: 'hotel_reserv_profile_mmc'
+    restart: always
     environment:
       - MEMCACHED_CACHE_SIZE=128
       - MEMCACHED_THREADS=2
     logging:
       options:
         max-size: 50m
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
 
   memcached-reserve:
     image: memcached
-    hostname: user-memcached
+    # hostname: user-memcached
+    container_name: 'hotel_reserv_reservation_mmc'
+    restart: always
     environment:
       - MEMCACHED_CACHE_SIZE=128
       - MEMCACHED_THREADS=2
     logging:
       options:
         max-size: 50m
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
 
   mongodb-geo:
     image: mongo:4.4.6
-    hostname: geo-db
+    container_name: 'hotel_reserv_geo_mongo'
+    # hostname: geo-db
+    restart: always
     volumes:
-      - geo:/data/db
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
+      - geo:/data/db  
 
   mongodb-profile:
     image: mongo:4.4.6
+    container_name: 'hotel_reserv_profile_mongo'
     hostname: profile-db
+    restart: always
     volumes:
-      - profile:/data/db
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
+      - profile:/data/db    
 
   mongodb-rate:
     image: mongo:4.4.6
+    container_name: 'hotel_reserv_rate_mongo'
     hostname: rate-db
+    restart: always
     volumes:
-      - rate:/data/db
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
+      - rate:/data/db   
 
   mongodb-recommendation:
     image: mongo:4.4.6
     hostname: recommendation-db
+    container_name: 'hotel_reserv_recommendation_mongo'
+    restart: always
     volumes:
       - recommendation:/data/db
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
-
+    
   mongodb-reservation:
     image: mongo:4.4.6
+    container_name: 'hotel_reserv_reservation_mongo'
     hostname: reservation-db
+    restart: always
     volumes:
-      - reservation:/data/db
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
+      - reservation:/data/db 
 
   mongodb-user:
     image: mongo:4.4.6
+    container_name: 'hotel_reserv_user_mongo'
     hostname: user-db
+    restart: always
     volumes:
       - user:/data/db
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
-
+    
 volumes:
   geo:
   profile:
@@ -244,4 +231,3 @@ volumes:
   recommendation:
   reservation:
   user:
-  
