@@ -1,4 +1,4 @@
-local socket = require("socket")
+require "socket"
 local time = socket.gettime()*1000
 math.randomseed(time)
 math.random(); math.random(); math.random()
