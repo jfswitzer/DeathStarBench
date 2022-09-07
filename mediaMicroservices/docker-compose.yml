@@ -171,10 +171,10 @@ services:
       - 8080:8080
     restart: always
     volumes:
-      - ./nginx-web-server/lua-scripts:/usr/local/openresty/nginx/lua-scripts
-      - ./nginx-web-server/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
-      - ./nginx-web-server/jaeger-config.json:/usr/local/openresty/nginx/jaeger-config.json
-      - ./gen-lua:/gen-lua
+      - /home/phablet/DeathStarBench/mediaMicroservices/nginx-web-server/lua-scripts:/usr/local/openresty/nginx/lua-scripts
+      - /home/phablet/DeathStarBench/mediaMicroservices/nginx-web-server/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+      - /home/phablet/DeathStarBench/mediaMicroservices/nginx-web-server/jaeger-config.json:/usr/local/openresty/nginx/jaeger-config.json
+      - /home/phablet/DeathStarBench/mediaMicroservices/gen-lua:/gen-lua
 
   cast-info-service:
     image: yg397/media-microservices

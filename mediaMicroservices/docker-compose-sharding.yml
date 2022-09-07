@@ -67,7 +67,7 @@ services:
     hostname: user-mongodb-config
     restart: always
     volumes:
-      - ./config/mongodb/user:/scripts
+      - /home/phablet/DeathStarBench/mediaMicroservices/config/mongodb/user:/scripts
     command: mongod --port 27017 --configsvr --replSet user-mongodb-config --noprealloc --smallfiles --oplogSize 16 --bind_ip_all
 
   user-mongodb-shard-1_1:
@@ -75,7 +75,7 @@ services:
     hostname: user-mongodb-shard-1_1
     restart: always
     volumes:
-      - ./config/mongodb/user:/scripts
+      - /home/phablet/DeathStarBench/mediaMicroservices/config/mongodb/user:/scripts
     command: mongod --port 27017 --shardsvr --replSet user-mongodb-shard-1 --smallfiles --oplogSize 16 --bind_ip_all
 
   user-mongodb-shard-1_2:
@@ -83,7 +83,7 @@ services:
     hostname: user-mongodb-shard-1_2
     restart: always
     volumes:
-      - ./config/mongodb/user:/scripts
+      - /home/phablet/DeathStarBench/mediaMicroservices/config/mongodb/user:/scripts
     command: mongod --port 27017 --shardsvr --replSet user-mongodb-shard-1 --smallfiles --oplogSize 16 --bind_ip_all
 
 
@@ -92,7 +92,7 @@ services:
     hostname: user-mongodb-shard-2_1
     restart: always
     volumes:
-      - ./config/mongodb/user:/scripts
+      - /home/phablet/DeathStarBench/mediaMicroservices/config/mongodb/user:/scripts
     command: mongod --port 27017 --shardsvr --replSet user-mongodb-shard-2 --smallfiles --oplogSize 16 --bind_ip_all
 
   user-mongodb-shard-2_2:
@@ -100,7 +100,7 @@ services:
     hostname: user-mongodb-shard-2_2
     restart: always
     volumes:
-      - ./config/mongodb/user:/scripts
+      - /home/phablet/DeathStarBench/mediaMicroservices/config/mongodb/user:/scripts
     command: mongod --port 27017 --shardsvr --replSet user-mongodb-shard-2 --smallfiles --oplogSize 16 --bind_ip_all
 
 
@@ -109,7 +109,7 @@ services:
     hostname: user-mongodb-shard-3_1
     restart: always
     volumes:
-      - ./config/mongodb/user:/scripts
+      - /home/phablet/DeathStarBench/mediaMicroservices/config/mongodb/user:/scripts
     command: mongod --port 27017 --shardsvr --replSet user-mongodb-shard-3 --smallfiles --oplogSize 16 --bind_ip_all
 
   user-mongodb-shard-3_2:
@@ -117,7 +117,7 @@ services:
     hostname: user-mongodb-shard-3_2
     restart: always
     volumes:
-      - ./config/mongodb/user:/scripts
+      - /home/phablet/DeathStarBench/mediaMicroservices/config/mongodb/user:/scripts
     command: mongod --port 27017 --shardsvr --replSet user-mongodb-shard-3 --smallfiles --oplogSize 16 --bind_ip_all
 
 
@@ -126,7 +126,7 @@ services:
     hostname: user-mongodb-router-1
     restart: always
     volumes:
-      - ./config/mongodb/user:/scripts
+      - /home/phablet/DeathStarBench/mediaMicroservices/config/mongodb/user:/scripts
     depends_on:
       - user-mongodb-config
       - user-mongodb-shard-1_1
@@ -234,10 +234,10 @@ services:
       - 8080:8080
     restart: always
     volumes:
-      - ./nginx-web-server/lua-scripts:/usr/local/openresty/nginx/lua-scripts
-      - ./nginx-web-server/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
-      - ./nginx-web-server/jaeger-config.json:/usr/local/openresty/nginx/jaeger-config.json
-      - ./gen-lua:/gen-lua
+      - /home/phablet/DeathStarBench/mediaMicroservices/nginx-web-server/lua-scripts:/usr/local/openresty/nginx/lua-scripts
+      - /home/phablet/DeathStarBench/mediaMicroservices/nginx-web-server/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+      - /home/phablet/DeathStarBench/mediaMicroservices/nginx-web-server/jaeger-config.json:/usr/local/openresty/nginx/jaeger-config.json
+      - /home/phablet/DeathStarBench/mediaMicroservices/gen-lua:/gen-lua
 
   jaeger:
     image: jaegertracing/all-in-one:latest
