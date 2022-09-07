@@ -34,7 +34,7 @@ services:
         condition: any
     command: ["ComposePostService"]
     hostname: compose-post-service
-    image: deathstarbench/social-network-microservices:latest
+    image: mjgiardino/social-network-microservices:latest
     volumes:
       - ./config:/social-network-microservices/config
       - ./keys:/keys
@@ -60,7 +60,7 @@ services:
         condition: any
     command: ["HomeTimelineService"]
     hostname: home-timeline-service
-    image: deathstarbench/social-network-microservices:latest
+    image: mjgiardino/social-network-microservices:latest
     volumes:
       - ./config:/social-network-microservices/config
       - ./keys:/keys
@@ -74,7 +74,7 @@ services:
       restart_policy:
         condition: any
     hostname: media-frontend
-    image: yg397/media-frontend:xenial
+    image: mjgiardino/media-frontend
     ports:
       - 8081:8080
     volumes:
@@ -116,7 +116,7 @@ services:
         condition: any
     command: ["MediaService"]
     hostname: media-service
-    image: deathstarbench/social-network-microservices:latest
+    image: mjgiardino/social-network-microservices:latest
     volumes:
       - ./config:/social-network-microservices/config
       - ./keys:/keys
@@ -130,7 +130,7 @@ services:
       restart_policy:
         condition: any
     hostname: nginx-web-server
-    image: yg397/openresty-thrift:xenial
+    image:  mjgiardino/openresty-thrift:xenial
     ports:
       - 8080:8080
     volumes:
@@ -177,7 +177,7 @@ services:
         condition: any
     command: ["PostStorageService"]
     hostname: post-storage-service
-    image: deathstarbench/social-network-microservices:latest
+    image: mjgiardino/social-network-microservices:latest
     volumes:
       - ./config:/social-network-microservices/config
       - ./keys:/keys
@@ -216,7 +216,7 @@ services:
         condition: any
     command: ["SocialGraphService"]
     hostname: social-graph-service
-    image: deathstarbench/social-network-microservices:latest
+    image: mjgiardino/social-network-microservices:latest
     volumes:
       - ./config:/social-network-microservices/config
       - ./keys:/keys
@@ -231,7 +231,7 @@ services:
         condition: any
     command: ["TextService"]
     hostname: text-service
-    image: deathstarbench/social-network-microservices:latest
+    image: mjgiardino/social-network-microservices:latest
     volumes:
       - ./config:/social-network-microservices/config
       - ./keys:/keys
@@ -246,7 +246,7 @@ services:
         condition: any
     command: ["UniqueIdService"]
     hostname: unique-id-service
-    image: deathstarbench/social-network-microservices:latest
+    image: mjgiardino/social-network-microservices:latest
     volumes:
       - ./config:/social-network-microservices/config
       - ./keys:/keys
@@ -286,7 +286,7 @@ services:
         condition: any
     command: ["UrlShortenService"]
     hostname: url-shorten-service
-    image: deathstarbench/social-network-microservices:latest
+    image: mjgiardino/social-network-microservices:latest
     volumes:
       - ./config:/social-network-microservices/config
       - ./keys:/keys
@@ -313,7 +313,7 @@ services:
         condition: any
     command: ["UserMentionService"]
     hostname: user-mention-service
-    image: deathstarbench/social-network-microservices:latest
+    image: mjgiardino/social-network-microservices:latest
     volumes:
       - ./config:/social-network-microservices/config
       - ./keys:/keys
@@ -341,7 +341,7 @@ services:
         condition: any
     command: ["UserService"]
     hostname: user-service
-    image: deathstarbench/social-network-microservices:latest
+    image: mjgiardino/social-network-microservices:latest
     volumes:
       - ./config:/social-network-microservices/config
       - ./keys:/keys
@@ -379,12 +379,12 @@ services:
         condition: any
     command: ["UserTimelineService"]
     hostname: user-timeline-service
-    image: deathstarbench/social-network-microservices:latest
+    image: mjgiardino/social-network-microservices:latest
     volumes:
       - ./config:/social-network-microservices/config
 
   jaeger-collector:
-    image: jaegertracing/jaeger-collector
+    image: ubuntu@sha256:50284bfb6764473bda38132c1b29b40f7c2feb61acd44e01509f0aad73177c9a
     command:
       [
         "--cassandra.keyspace=jaeger_v1_dc1",
@@ -402,7 +402,7 @@ services:
       - cassandra-schema
 
   jaeger-query:
-    image: jaegertracing/jaeger-query
+    image: ubuntu@sha256:dc06a73b720acd14f1967d7b1b0b3c1ae52f8457f676b573852b0560ba6b3c5f
     command:
       ["--cassandra.keyspace=jaeger_v1_dc1", "--cassandra.servers=cassandra"]
     ports:
@@ -414,16 +414,15 @@ services:
       - cassandra-schema
 
   cassandra-schema:
-    image: jaegertracing/jaeger-cassandra-schema
+    image: ubuntu@sha256:a58d41e4440b3d4b9e198eae44e7f36196167f00db2c72d342fd568c8d17742d
     deploy:
       restart_policy:
-        condition: on-failure
+        condition: any
     depends_on:
       - cassandra
 
   cassandra:
-    image: cassandra:3.9
-    deploy:
+    image: ubuntu@sha256:d02b67f0d7424061cacf26c093face93ac020d056f82aee98d82c0e77c058567
 
 networks:
   default:
