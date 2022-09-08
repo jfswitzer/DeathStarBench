@@ -36,8 +36,8 @@ services:
     hostname: compose-post-service
     image: mjgiardino/social-network-microservices:latest
     volumes:
-      - ./config:/social-network-microservices/config
-      - ./keys:/keys
+      - /home/phablet/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /home/phablet/DeathStarBench/socialNetwork/keys:/keys
 
   home-timeline-redis:
     depends_on:
@@ -47,8 +47,8 @@ services:
     image: redis
     command: "redis-server /social-network-microservices/config/redis.conf"
     volumes:
-      - ./config:/social-network-microservices/config
-      - ./keys:/keys
+      - /home/phablet/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /home/phablet/DeathStarBench/socialNetwork/keys:/keys
 
   home-timeline-service:
     depends_on:
@@ -62,8 +62,8 @@ services:
     hostname: home-timeline-service
     image: mjgiardino/social-network-microservices:latest
     volumes:
-      - ./config:/social-network-microservices/config
-      - ./keys:/keys
+      - /home/phablet/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /home/phablet/DeathStarBench/socialNetwork/keys:/keys
 
   media-frontend:
     depends_on:
@@ -78,8 +78,8 @@ services:
     ports:
       - 8081:8080
     volumes:
-      - ./media-frontend/lua-scripts:/usr/local/openresty/nginx/lua-scripts
-      - ./media-frontend/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+      - /home/phablet/DeathStarBench/socialNetwork/media-frontend/lua-scripts:/usr/local/openresty/nginx/lua-scripts
+      - /home/phablet/DeathStarBench/socialNetwork/media-frontend/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
 
   media-memcached:
     depends_on:
@@ -102,8 +102,8 @@ services:
     command: "mongod --nojournal --quiet --config /social-network-microservices/config/mongod.conf"
     # command: "mongod --serviceExecutor adaptive --listenBacklog 1024 --syncdelay 3600 --wiredTigerCacheSizeGB 2"
     volumes:
-      - ./config:/social-network-microservices/config
-      - ./keys:/keys
+      - /home/phablet/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /home/phablet/DeathStarBench/socialNetwork/keys:/keys
 
   media-service:
     depends_on:
@@ -118,8 +118,8 @@ services:
     hostname: media-service
     image: mjgiardino/social-network-microservices:latest
     volumes:
-      - ./config:/social-network-microservices/config
-      - ./keys:/keys
+      - /home/phablet/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /home/phablet/DeathStarBench/socialNetwork/keys:/keys
 
   nginx-web-server:
     depends_on:
@@ -134,13 +134,13 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - ./nginx-web-server/lua-scripts:/usr/local/openresty/nginx/lua-scripts
-      - ./nginx-web-server/pages:/usr/local/openresty/nginx/pages
-      - ./nginx-web-server/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
-      - ./nginx-web-server/jaeger-config.json:/usr/local/openresty/nginx/jaeger-config.json
-      - ./gen-lua:/gen-lua
-      - ./docker/openresty-thrift/lua-thrift:/usr/local/openresty/lualib/thrift
-      - ./keys:/keys
+      - /home/phablet/DeathStarBench/socialNetwork/nginx-web-server/lua-scripts:/usr/local/openresty/nginx/lua-scripts
+      - /home/phablet/DeathStarBench/socialNetwork/nginx-web-server/pages:/usr/local/openresty/nginx/pages
+      - /home/phablet/DeathStarBench/socialNetwork/nginx-web-server/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+      - /home/phablet/DeathStarBench/socialNetwork/nginx-web-server/jaeger-config.json:/usr/local/openresty/nginx/jaeger-config.json
+      - /home/phablet/DeathStarBench/socialNetwork/gen-lua:/gen-lua
+      - /home/phablet/DeathStarBench/socialNetwork/docker/openresty-thrift/lua-thrift:/usr/local/openresty/lualib/thrift
+      - /home/phablet/DeathStarBench/socialNetwork/keys:/keys
 
   post-storage-memcached:
     depends_on:
@@ -163,8 +163,8 @@ services:
     command: "mongod --nojournal --quiet --config /social-network-microservices/config/mongod.conf"
     # command: "mongod --serviceExecutor adaptive --listenBacklog 1024 --syncdelay 3600 --wiredTigerCacheSizeGB 75"
     volumes:
-      - ./config:/social-network-microservices/config
-      - ./keys:/keys
+      - /home/phablet/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /home/phablet/DeathStarBench/socialNetwork/keys:/keys
 
   post-storage-service:
     depends_on:
@@ -179,8 +179,8 @@ services:
     hostname: post-storage-service
     image: mjgiardino/social-network-microservices:latest
     volumes:
-      - ./config:/social-network-microservices/config
-      - ./keys:/keys
+      - /home/phablet/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /home/phablet/DeathStarBench/socialNetwork/keys:/keys
 
   social-graph-mongodb:
     depends_on:
@@ -191,8 +191,8 @@ services:
     command: "mongod --nojournal --quiet --config /social-network-microservices/config/mongod.conf"
     # command: "mongod --serviceExecutor adaptive --listenBacklog 1024 --syncdelay 3600 --wiredTigerCacheSizeGB 16"
     volumes:
-      - ./config:/social-network-microservices/config
-      - ./keys:/keys
+      - /home/phablet/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /home/phablet/DeathStarBench/socialNetwork/keys:/keys
 
   social-graph-redis:
     depends_on:
@@ -202,8 +202,8 @@ services:
     image: redis
     command: "redis-server /social-network-microservices/config/redis.conf"
     volumes:
-      - ./config:/social-network-microservices/config
-      - ./keys:/keys
+      - /home/phablet/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /home/phablet/DeathStarBench/socialNetwork/keys:/keys
 
   social-graph-service:
     depends_on:
@@ -218,8 +218,8 @@ services:
     hostname: social-graph-service
     image: mjgiardino/social-network-microservices:latest
     volumes:
-      - ./config:/social-network-microservices/config
-      - ./keys:/keys
+      - /home/phablet/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /home/phablet/DeathStarBench/socialNetwork/keys:/keys
 
   text-service:
     depends_on:
@@ -233,8 +233,8 @@ services:
     hostname: text-service
     image: mjgiardino/social-network-microservices:latest
     volumes:
-      - ./config:/social-network-microservices/config
-      - ./keys:/keys
+      - /home/phablet/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /home/phablet/DeathStarBench/socialNetwork/keys:/keys
 
   unique-id-service:
     depends_on:
@@ -248,8 +248,8 @@ services:
     hostname: unique-id-service
     image: mjgiardino/social-network-microservices:latest
     volumes:
-      - ./config:/social-network-microservices/config
-      - ./keys:/keys
+      - /home/phablet/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /home/phablet/DeathStarBench/socialNetwork/keys:/keys
 
   url-shorten-memcached:
     depends_on:
@@ -272,8 +272,8 @@ services:
     command: "mongod --nojournal --quiet --config /social-network-microservices/config/mongod.conf"
     # command: "mongod --serviceExecutor adaptive --listenBacklog 1024 --syncdelay 3600 --wiredTigerCacheSizeGB 36"
     volumes:
-      - ./config:/social-network-microservices/config
-      - ./keys:/keys
+      - /home/phablet/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /home/phablet/DeathStarBench/socialNetwork/keys:/keys
 
   url-shorten-service:
     depends_on:
@@ -288,8 +288,8 @@ services:
     hostname: url-shorten-service
     image: mjgiardino/social-network-microservices:latest
     volumes:
-      - ./config:/social-network-microservices/config
-      - ./keys:/keys
+      - /home/phablet/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /home/phablet/DeathStarBench/socialNetwork/keys:/keys
 
   user-memcached:
     depends_on:
@@ -315,8 +315,8 @@ services:
     hostname: user-mention-service
     image: mjgiardino/social-network-microservices:latest
     volumes:
-      - ./config:/social-network-microservices/config
-      - ./keys:/keys
+      - /home/phablet/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /home/phablet/DeathStarBench/socialNetwork/keys:/keys
 
   user-mongodb:
     depends_on:
@@ -327,8 +327,8 @@ services:
     command: "mongod --nojournal --quiet --config /social-network-microservices/config/mongod.conf"
     # command: "mongod --serviceExecutor adaptive --listenBacklog 1024 --syncdelay 3600 --wiredTigerCacheSizeGB 8"
     volumes:
-      - ./config:/social-network-microservices/config
-      - ./keys:/keys
+      - /home/phablet/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /home/phablet/DeathStarBench/socialNetwork/keys:/keys
 
   user-service:
     depends_on:
@@ -343,8 +343,8 @@ services:
     hostname: user-service
     image: mjgiardino/social-network-microservices:latest
     volumes:
-      - ./config:/social-network-microservices/config
-      - ./keys:/keys
+      - /home/phablet/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /home/phablet/DeathStarBench/socialNetwork/keys:/keys
 
   user-timeline-mongodb:
     depends_on:
@@ -355,8 +355,8 @@ services:
     command: "mongod --nojournal --quiet --config /social-network-microservices/config/mongod.conf"
     # command: "mongod --serviceExecutor adaptive --listenBacklog 1024 --syncdelay 3600 --wiredTigerCacheSizeGB 75"
     volumes:
-      - ./config:/social-network-microservices/config
-      - ./keys:/keys
+      - /home/phablet/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /home/phablet/DeathStarBench/socialNetwork/keys:/keys
 
   user-timeline-redis:
     depends_on:
@@ -366,8 +366,8 @@ services:
     image: redis
     command: "redis-server /social-network-microservices/config/redis.conf"
     volumes:
-      - ./config:/social-network-microservices/config
-      - ./keys:/keys
+      - /home/phablet/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /home/phablet/DeathStarBench/socialNetwork/keys:/keys
 
   user-timeline-service:
     depends_on:
@@ -381,10 +381,10 @@ services:
     hostname: user-timeline-service
     image: mjgiardino/social-network-microservices:latest
     volumes:
-      - ./config:/social-network-microservices/config
+      - /home/phablet/DeathStarBench/socialNetwork/config:/social-network-microservices/config
 
   jaeger-collector:
-    image: ubuntu@sha256:50284bfb6764473bda38132c1b29b40f7c2feb61acd44e01509f0aad73177c9a
+    image: jaegertracing/jaeger-collector
     command:
       [
         "--cassandra.keyspace=jaeger_v1_dc1",
@@ -402,7 +402,7 @@ services:
       - cassandra-schema
 
   jaeger-query:
-    image: ubuntu@sha256:dc06a73b720acd14f1967d7b1b0b3c1ae52f8457f676b573852b0560ba6b3c5f
+    image: jaegertracing/jaeger-query
     command:
       ["--cassandra.keyspace=jaeger_v1_dc1", "--cassandra.servers=cassandra"]
     ports:
@@ -414,7 +414,7 @@ services:
       - cassandra-schema
 
   cassandra-schema:
-    image: ubuntu@sha256:a58d41e4440b3d4b9e198eae44e7f36196167f00db2c72d342fd568c8d17742d
+    image: gemarcano/jaeger-cassandra-schema
     deploy:
       restart_policy:
         condition: any
@@ -422,7 +422,7 @@ services:
       - cassandra
 
   cassandra:
-    image: ubuntu@sha256:d02b67f0d7424061cacf26c093face93ac020d056f82aee98d82c0e77c058567
+    image: cassandra:4.0
 
 networks:
   default:
