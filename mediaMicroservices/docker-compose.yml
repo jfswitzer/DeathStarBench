@@ -2,22 +2,22 @@ version: "3"
 services:
 #   Enables resolving container hostnames from host machine
   dns-media:
-    image: defreitas/dns-proxy-server
+    image: defreitas/dns-proxy-server:2.19.0-arm8x64
     volumes:
       - /opt/dns-proxy-server/conf:/app/conf
       - /var/run/docker.sock:/var/run/docker.sock
       - /etc/resolv.conf:/etc/resolv.conf
 
   unique-id-service:
-    image: yg397/media-microservices
+    image: mjgiardino/media-microservices:xenial
     hostname: unique-id-service
-#    ports:
-#      - 10001:9090
+    ports:
+      - 10001:9090
     restart: always
     entrypoint: UniqueIdService
 
   movie-id-service:
-    image: yg397/media-microservices
+    image: mjgiardino/media-microservices:xenial
     hostname: movie-id-service
 #    ports:
 #      - 10002:9090
@@ -39,7 +39,7 @@ services:
     restart: always
 
   text-service:
-    image: yg397/media-microservices
+    image: mjgiardino/media-microservices:xenial
     hostname: text-service
 #    ports:
 #      - 10003:9090
@@ -47,7 +47,7 @@ services:
     entrypoint: TextService
 
   rating-service:
-    image: yg397/media-microservices
+    image: mjgiardino/media-microservices:xenial
     hostname: rating-service
 #    ports:
 #      - 10004:9090
@@ -62,7 +62,7 @@ services:
     restart: always
 
   user-service:
-    image: yg397/media-microservices
+    image: mjgiardino/media-microservices:xenial
     hostname: user-service
 #    ports:
 #      - 10005:9090
@@ -84,10 +84,10 @@ services:
     restart: always
 
   compose-review-service:
-    image: yg397/media-microservices
+    image: mjgiardino/media-microservices:xenial
     hostname: compose-review-service
-#    ports:
-#      - 10006:9090
+    ports:
+      - 10006:9090
     restart: always
     entrypoint: ComposeReviewService
 
@@ -99,7 +99,7 @@ services:
     restart: always
 
   review-storage-service:
-    image: yg397/media-microservices
+    image: mjgiardino/media-microservices:xenial
     hostname: review-storage-service
 #    ports:
 #      - 10007:9090
@@ -121,7 +121,7 @@ services:
     restart: always
 
   user-review-service:
-    image: yg397/media-microservices
+    image: mjgiardino/media-microservices:xenial
     hostname: user-review-service
 #    ports:
 #      - 10008:9090
@@ -143,7 +143,7 @@ services:
     restart: always
 
   movie-review-service:
-    image: yg397/media-microservices
+    image: mjgiardino/media-microservices:xenial
     hostname: movie-review-service
 #    ports:
 #      - 10009:9090
@@ -165,7 +165,7 @@ services:
     restart: always
 
   nginx-web-server:
-    image: yg397/openresty-thrift:xenial
+    image: mjgiardino/openresty-thrift:xenial
     hostname: nginx-thrift
     ports:
       - 8080:8080
@@ -175,9 +175,11 @@ services:
       - /home/phablet/DeathStarBench/mediaMicroservices/nginx-web-server/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
       - /home/phablet/DeathStarBench/mediaMicroservices/nginx-web-server/jaeger-config.json:/usr/local/openresty/nginx/jaeger-config.json
       - /home/phablet/DeathStarBench/mediaMicroservices/gen-lua:/gen-lua
+#    deploy:
+#      replicas: 1
 
   cast-info-service:
-    image: yg397/media-microservices
+    image: mjgiardino/media-microservices:xenial
     hostname: cast-info-service
 #    ports:
 #      - 10010:9090
@@ -199,7 +201,7 @@ services:
     restart: always
 
   plot-service:
-    image: yg397/media-microservices
+    image: mjgiardino/media-microservices:xenial
     hostname: plot-service
 #    ports:
 #      - 10011:9090
@@ -221,7 +223,7 @@ services:
     restart: always
 
   movie-info-service:
-    image: yg397/media-microservices
+    image: mjgiardino/media-microservices:xenial
     hostname: movie-info-service
 #    ports:
 #      - 10012:9090

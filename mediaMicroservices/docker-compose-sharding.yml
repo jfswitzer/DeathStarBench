@@ -228,7 +228,7 @@ services:
   #    restart: always
   #
   nginx-thrift:
-    image: yg397/openresty-thrift:xenial
+    image: mjgiardino/openresty-thrift:xenial
     hostname: nginx-thrift
     ports:
       - 8080:8080
