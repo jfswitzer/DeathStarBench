@@ -4,3 +4,5 @@ build
 */wrk2/deps
 */wrk2/obj
 */wrk2/wrk
+*.o
+mediaMicroservices/wrk2/*
