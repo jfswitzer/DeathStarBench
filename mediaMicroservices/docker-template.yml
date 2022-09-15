@@ -7,8 +7,6 @@ services:
       - /opt/dns-proxy-server/conf:/app/conf
       - /var/run/docker.sock:/var/run/docker.sock
       - /etc/resolv.conf:/etc/resolv.conf
-    # deploy:
-      #replicas: 3
 
   unique-id-service:
     image: mjgiardino/media-microservices:xenial
@@ -19,8 +17,6 @@ services:
     entrypoint: UniqueIdService
     depends_on:
       - nginx-web-server
-    # deploy:
-      #replicas: 3
 
   movie-id-service:
     image: mjgiardino/media-microservices:xenial
@@ -29,22 +25,16 @@ services:
     entrypoint: MovieIdService
     depends_on:
       - nginx-web-server    
-    # deploy:
-      #replicas: 3
 
   movie-id-mongodb:
     image: mongo:4.4.6
     hostname: movie-id-mongodb
     restart: always
-    # deploy:
-      #replicas: 3
 
   movie-id-memcached:
     image: memcached
     hostname: movie-id-memcached
     restart: always
-    # deploy:
-      #replicas: 3
 
   text-service:
     image: mjgiardino/media-microservices:xenial
@@ -53,8 +43,6 @@ services:
     entrypoint: TextService
     depends_on:
       - nginx-web-server      
-    # deploy:
-      #replicas: 3
 
   rating-service:
     image: mjgiardino/media-microservices:xenial
@@ -63,15 +51,12 @@ services:
     entrypoint: RatingService
     depends_on:
       - movie-id-service
-    # deploy:
-      #replicas: 3
 
   rating-redis:
     image: redis
     hostname: rating-redis
     restart: always
-    # deploy:
-      #replicas: 3
+    
   user-service:
     image: mjgiardino/media-microservices:xenial
     hostname: user-service
@@ -79,22 +64,16 @@ services:
     entrypoint: UserService
     depends_on:
       - nginx-web-server
-    # deploy:
-      #replicas: 3
 
   user-mongodb:
     image: mongo:4.4.6
     hostname: user-mongodb
     restart: always
-    # deploy:
-      #replicas: 3
 
   user-memcached:
     image: memcached
     hostname: user-memcached
     restart: always
-    # deploy:
-      #replicas: 3
 
   compose-review-service:
     image: mjgiardino/media-microservices:xenial
@@ -109,15 +88,13 @@ services:
       - unique-id-service
       - user-service
       - text-service
-    # deploy:
-      #replicas: 3
+    deploy:
+      replicas: $b
 
   compose-review-memcached:
     image: memcached
     hostname: compose-review-memcached
     restart: always
-    # deploy:
-      #replicas: 3
 
   review-storage-service:
     image: mjgiardino/media-microservices:xenial
@@ -126,22 +103,16 @@ services:
     entrypoint: ReviewStorageService
     depends_on:
       - compose-review-service
-    # deploy:
-      #replicas: 3
 
   review-storage-mongodb:
     image: mongo:4.4.6
     hostname: review-storage-mongodb
     restart: always
-    # deploy:
-      #replicas: 3
 
   review-storage-memcached:
     image: memcached
     hostname: review-storage-memcached
     restart: always
-    # deploy:
-      #replicas: 3
 
   user-review-service:
     image: mjgiardino/media-microservices:xenial
@@ -150,22 +121,16 @@ services:
     entrypoint: UserReviewService
     depends_on:
       - compose-review-service
-    # deploy:
-      #replicas: 3
       
   user-review-mongodb:
     image: mongo:4.4.6
     hostname: user-review-mongodb
     restart: always
-    # deploy:
-      #replicas: 3
 
   user-review-redis:
     image: redis
     hostname: user-review-redis
     restart: always
-    # deploy:
-      #replicas: 3
 
   movie-review-service:
     image: mjgiardino/media-microservices:xenial
@@ -174,8 +139,6 @@ services:
     entrypoint: MovieReviewService
     depends_on:
       - compose-review-service
-    # deploy:
-      #replicas: 3
 
   movie-review-mongodb:
     image: mongo:4.4.6
@@ -183,15 +146,11 @@ services:
     ports:
       - 27022:27017
     restart: always
-    # deploy:
-      #replicas: 3
 
   movie-review-redis:
     image: redis
     hostname: movie-review-redis
     restart: always
-    # deploy:
-      #replicas: 3
 
   nginx-web-server:
     image: mjgiardino/openresty-thrift:xenial
@@ -203,8 +162,8 @@ services:
       - /home/phablet/DeathStarBench/mediaMicroservices/nginx-web-server/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
       - /home/phablet/DeathStarBench/mediaMicroservices/nginx-web-server/jaeger-config.json:/usr/local/openresty/nginx/jaeger-config.json
       - /home/phablet/DeathStarBench/mediaMicroservices/gen-lua:/gen-lua
-    # deploy:
-      #replicas: 3
+    deploy:
+      replicas: $a
   cast-info-service:
     image: mjgiardino/media-microservices:xenial
     hostname: cast-info-service
@@ -212,22 +171,16 @@ services:
     entrypoint: CastInfoService
     depends_on:
       - nginx-web-server
-    # deploy:
-      #replicas: 3
 
   cast-info-mongodb:
     image: mongo:4.4.6
     hostname: cast-info-mongodb
     restart: always
-    # deploy:
-      #replicas: 3
 
   cast-info-memcached:
     image: memcached
     hostname: cast-info-memcached
     restart: always
-    # deploy:
-      #replicas: 3
 
   plot-service:
     image: mjgiardino/media-microservices:xenial
@@ -236,22 +189,16 @@ services:
     entrypoint: PlotService
     depends_on:
       - nginx-web-server
-    # deploy:
-      #replicas: 3
 
   plot-mongodb:
     image: mongo:4.4.6
     hostname: plot-mongodb
     restart: always
-    # deploy:
-      #replicas: 3
 
   plot-memcached:
     image: memcached
     hostname: plot-memcached
     restart: always
-    # deploy:
-      #replicas: 3
 
   movie-info-service:
     image: mjgiardino/media-microservices:xenial
@@ -260,22 +207,16 @@ services:
     entrypoint: MovieInfoService
     depends_on:
       - nginx-web-server
-    # deploy:
-      #replicas: 3
 
   movie-info-mongodb:
     image: mongo:4.4.6
     hostname: movie-info-mongodb
     restart: always
-    # deploy:
-      #replicas: 3
 
   movie-info-memcached:
     image: memcached
     hostname: movie-info-memcached
     restart: always
-    # deploy:
-      #replicas: 3
 
   jaeger:
     image: jaegertracing/all-in-one:latest
@@ -284,5 +225,3 @@ services:
       - 16686:16686
     environment:
       - COLLECTOR_ZIPKIN_HTTP_PORT=9411
-    # deploy:
-      #replicas: 3
